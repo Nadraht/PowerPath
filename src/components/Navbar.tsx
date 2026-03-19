@@ -1,4 +1,5 @@
 import { Zap } from "lucide-react";
+import { ModeToggle } from "@/components/ModeToggle";
 
 const Navbar = () => (
   <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
@@ -7,12 +8,15 @@ const Navbar = () => (
         <Zap className="h-5 w-5 text-primary" />
         <span>Power<span className="text-primary">Path</span></span>
       </div>
-      <a
-        href="#demo"
-        className="bg-gradient-primary text-primary-foreground font-medium px-5 py-2 rounded-full text-sm hover:scale-105 transition-transform"
-      >
-        Try PowerPath
-      </a>
+
+      <div className="flex items-center gap-4">
+        <ModeToggle /> 
+        <a
+          href="#demo"
+          className="bg-gradient-primary text-primary-foreground font-medium px-5 py-2 rounded-full text-sm hover:scale-105 transition-transform">
+          Try PowerPath
+        </a>
+      </div>
     </div>
   </nav>
 );

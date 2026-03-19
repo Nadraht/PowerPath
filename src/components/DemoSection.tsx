@@ -65,7 +65,7 @@ const DemoSection = () => (
 
       <div className="text-center mt-12">
         <a
-          href="#"
+          href="/chat"
           className="inline-flex items-center gap-2 bg-gradient-accent text-accent-foreground font-semibold px-8 py-4 rounded-full text-lg hover:scale-105 transition-transform"
         >
           <Zap className="h-5 w-5" />

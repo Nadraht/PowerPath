@@ -8,24 +8,27 @@ const steps = [
 ];
 
 const HowItWorksSection = () => (
-  <section className="py-24 px-6">
-    <div className="container">
-      <h2 className="text-3xl sm:text-4xl font-bold text-center mb-16">
-        How It <span className="text-gradient-accent">Works</span>
+<section className="py-24 px-6 bg-white text-slate-900 dark:bg-[#05080D] dark:text-white transition-colors duration-300">
+    <div className="container max-w-6xl mx-auto">
+      <h2 className="text-3xl sm:text-4xl font-bold text-center mb-16 text-white">
+        How It <span className="text-[#A3E635]">Works</span> {/* Restore that specific Lime Green */}
       </h2>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12">
         {steps.map((step, i) => (
-          <div key={step.title} className="text-center">
-            <div className="relative mx-auto mb-6">
-              <div className="h-16 w-16 mx-auto rounded-2xl bg-gradient-primary flex items-center justify-center shadow-glow">
-                <step.icon className="h-7 w-7 text-primary-foreground" />
+          <div key={step.title} className="text-center group">
+            <div className="relative mx-auto mb-8 w-20">
+              {/* RESTORED GRADIENT BOX */}
+              <div className="relative h-20 w-20 mx-auto rounded-2xl bg-gradient-to-br from-[#10B981] to-[#3B82F6] flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+                <step.icon className="h-9 w-9 text-[#05080D] stroke-[2.5px]" />
               </div>
-              <span className="absolute -top-2 -right-2 h-7 w-7 rounded-full bg-accent text-accent-foreground text-sm font-bold flex items-center justify-center">
+
+              {/* RESTORED YELLOW NUMBER CHIP */}
+              <span className="absolute -top-3 -right-3 h-7 w-7 rounded-full bg-[#FACC15] text-black text-xs font-black flex items-center justify-center shadow-lg border-2 border-[#05080D]">
                 {i + 1}
               </span>
             </div>
-            <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
-            <p className="text-muted-foreground text-sm">{step.desc}</p>
+            <h3 className="text-xl font-bold mb-3 text-white">{step.title}</h3>
+            <p className="text-slate-400 text-sm leading-relaxed">{step.desc}</p>
           </div>
         ))}
       </div>

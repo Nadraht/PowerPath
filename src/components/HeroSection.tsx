@@ -2,6 +2,7 @@ import { Zap, Navigation } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 import heroIllustration from "@/assets/hero-illustration.png";
 
+
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -31,11 +32,12 @@ const HeroSection = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
               <a
-                href="#demo"
+                href="/chat"
                 className="inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-semibold px-8 py-4 rounded-full text-lg shadow-glow hover:scale-105 transition-transform"
               >
                 <Zap className="h-5 w-5" />
                 Chat With PowerPath AI
+                
               </a>
             </div>
           </div>

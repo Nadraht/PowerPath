@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
 
 @tailwind base;
 @tailwind components;
@@ -6,50 +9,58 @@
 
 @layer base {
   :root {
-    --background: 220 25% 6%;
-    --foreground: 210 40% 96%;
+    /* --- RESTORE OLD COLORS --- */
+    --background: 210 40% 98%;
+    --foreground: 222.2 84% 4.9%;
 
-    --card: 220 20% 10%;
-    --card-foreground: 210 40% 96%;
+    /* Map your old Brand Blue/Green to the 'Primary' variable */
+    --primary: 152 68% 45%; /* Your old Green from --gradient-primary */
+    --primary-foreground: 210 40% 98%;
 
-    --popover: 220 20% 10%;
-    --popover-foreground: 210 40% 96%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
 
-    --primary: 152 68% 45%;
-    --primary-foreground: 220 25% 6%;
-
-    --secondary: 210 80% 55%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 220 15% 15%;
-    --muted-foreground: 215 15% 55%;
-
-    --accent: 48 96% 55%;
-    --accent-foreground: 220 25% 6%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
+    /* --- RESTORE OLD BORDERS/RADIUS --- */
+    --radius: 1rem; /* Makes it rounded like your old design */
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
     --ring: 152 68% 45%;
 
-    --radius: 0.75rem;
-
+    /* --- YOUR OLD CUSTOM GRADIENTS (KEEP THESE) --- */
     --gradient-hero: linear-gradient(135deg, hsl(220 25% 6%) 0%, hsl(215 30% 12%) 50%, hsl(220 25% 6%) 100%);
     --gradient-primary: linear-gradient(135deg, hsl(152 68% 45%), hsl(210 80% 55%));
-    --gradient-accent: linear-gradient(135deg, hsl(48 96% 55%), hsl(152 68% 45%));
+    --gradient-accent: linear-gradient(135deg, hsl(48, 100%, 50%), hsl(152 68% 45%));
     --shadow-glow: 0 0 40px hsl(152 68% 45% / 0.15);
     --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.3);
+  }
 
-    --sidebar-background: 220 20% 10%;
-    --sidebar-foreground: 210 40% 96%;
-    --sidebar-primary: 152 68% 45%;
-    --sidebar-primary-foreground: 220 25% 6%;
-    --sidebar-accent: 220 15% 15%;
-    --sidebar-accent-foreground: 210 40% 96%;
-    --sidebar-border: 220 15% 18%;
-    --sidebar-ring: 152 68% 45%;
+  .dark {
+    /* --- RESTORE DARK THEME --- */
+    --background: 222.2 84% 4.9%; /* Deep Dark Blue/Black */
+    --foreground: 210 40% 98%;
+    
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --primary: 152 68% 45%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 152 68% 45%;
+  }
+
+  .theme {
+    --font-sans: 'Geist Variable', sans-serif;
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
   }
 }
 
