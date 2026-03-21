@@ -1,5 +1,24 @@
+<<<<<<< HEAD
 .env
 __pycache__/
 *.pyc
 venv/
 .vscode/
+=======
+# Dependencies
+node_modules/
+
+# Environment Variables (CRITICAL: Do not delete this)
+.env
+
+# Debugging and Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# OS Metadata
+.DS_Store
+Thumbs.db
+>>>>>>> 9b2a07f (Deploy: Full Stack PowerPath Engine (Backend + Frontend))

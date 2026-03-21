@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* --- RESTORE OLD COLORS --- */
+    --background: 210 40% 98%;
+    --foreground: 222.2 84% 4.9%;
+
+    /* Map your old Brand Blue/Green to the 'Primary' variable */
+    --primary: 152 68% 45%; /* Your old Green from --gradient-primary */
+    --primary-foreground: 210 40% 98%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    /* --- RESTORE OLD BORDERS/RADIUS --- */
+    --radius: 1rem; /* Makes it rounded like your old design */
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 152 68% 45%;
+
+    /* --- YOUR OLD CUSTOM GRADIENTS (KEEP THESE) --- */
+    --gradient-hero: linear-gradient(135deg, hsl(220 25% 6%) 0%, hsl(215 30% 12%) 50%, hsl(220 25% 6%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(152 68% 45%), hsl(210 80% 55%));
+    --gradient-accent: linear-gradient(135deg, hsl(48, 100%, 50%), hsl(152 68% 45%));
+    --shadow-glow: 0 0 40px hsl(152 68% 45% / 0.15);
+    --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.3);
+  }
+
+  .dark {
+    /* --- RESTORE DARK THEME --- */
+    --background: 222.2 84% 4.9%; /* Deep Dark Blue/Black */
+    --foreground: 210 40% 98%;
+    
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --primary: 152 68% 45%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 152 68% 45%;
+  }
+
+  .theme {
+    --font-sans: 'Geist Variable', sans-serif;
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer utilities {
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+
+  .text-gradient-accent {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-accent);
+  }
+
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+
+  .bg-gradient-accent {
+    background-image: var(--gradient-accent);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+}
