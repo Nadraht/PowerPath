@@ -4,13 +4,21 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Link } from 'react-router-dom';
 import { ModeToggle } from "@/components/ModeToggle";
+import { processUserMessage } from '../lib/powerLogic';
 
 interface Message {
     id: number;
     type: 'user' | 'ai';
+    isUser?: boolean;
     text: string;
     time: string;
 }
+
+const suggestions = [
+    "Report an Outage",
+    "Check Restoration Time",
+    "View Traffic Delays"
+];
 
 const ChatAssistant = () => {
     const [input, setInput] = useState("");
@@ -30,38 +38,49 @@ const ChatAssistant = () => {
     }, [messages]);
 
     const handleSend = (overrideInput?: string) => {
-        const messageText = overrideInput || input;
-        if (!messageText.trim()) return;
+        const messageText = (overrideInput || input).trim();
+        if (!messageText) return;
 
-        // 1. Add User Message
+        // 1. Add User Message to UI
         const userMsg: Message = {
             id: Date.now(),
             type: 'user',
+            isUser: true,
             text: messageText,
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         };
         setMessages(prev => [...prev, userMsg]);
         setInput("");
-        setIsTyping(true); // Start the animation
+        setIsTyping(true);
 
-        // 2. Mock Logic 
         setTimeout(() => {
-            let aiText = "I'm checking the data now...";
+            const lowerInput = messageText.toLowerCase().trim();
+            let aiText = "";
 
-            // Step 1: User asks generally
-            if (messageText.includes("light be restored")) {
-                setStep(1); // AI is now waiting for location
-                aiText = "What is your specific area?";
-            } else if (step === 1) {
-                setStep(0); // Reset after getting location
-                aiText = `Checking NEPA database for ${messageText}... restoration at 6 PM.`;
+            // 2. Integration: The Greeting Logic
+            const greetings = ["hello", "hi", "hey", "good morning", "good afternoon"];
+
+            if (greetings.includes(lowerInput)) {
+                aiText = "Hello! Welcome to PowerPath Support. How can I assist you with your energy updates today?";
             }
-            // Step 3: User asks for traffic
-            else if (messageText.includes("route") || messageText.includes("traffic")) {
-                aiText = "Calculating the best route from your location... 🚗 Third Mainland Bridge is currently at a standstill. I suggest taking Carter Bridge; it will save you 22 minutes.";
+            // 3. Integration: Location Logic (Yaba/Ikeja)
+            else if (lowerInput.includes("yaba") || lowerInput.includes("ikeja")) {
+                setStep(1); // Set state to "waiting for street"
+                aiText = `I see you're asking about ${lowerInput.includes("yaba") ? "Yaba" : "Ikeja"}. Which specific street or area should I check?`;
             }
+            // 4. Fallback to your existing logic
             else {
-                aiText = "Analyzing grid stability in your area... Currently, the grid is stable, but I predict a 40% chance of a load-shedding event at 4:00 PM.";
+                const response = processUserMessage(messageText);
+                aiText = response || "I'm checking the data now...";
+
+                // Your existing step-based logic
+                if (messageText.includes("light be restored")) {
+                    setStep(1);
+                    aiText = "What is your specific area?";
+                } else if (step === 1) {
+                    setStep(0);
+                    aiText = `Checking NEPA database for ${messageText}... restoration at 6 PM.`;
+                }
             }
 
             const aiResponse: Message = {
@@ -72,10 +91,9 @@ const ChatAssistant = () => {
             };
 
             setMessages(prev => [...prev, aiResponse]);
-            setIsTyping(false); // Stop the animation
-        }, 1500); // 1.5s delay makes it feel like it's "looking up a database"
+            setIsTyping(false);
+        }, 1500);
     };
-
 
     return (
         // 1. Fixed height container that doesn't scroll
@@ -131,6 +149,20 @@ const ChatAssistant = () => {
                     ))}
                     {/* This invisible div allows the auto-scroll logic to work */}
 
+                    {!isTyping && messages.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mb-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            {suggestions.map((text) => (
+                                <button
+                                    key={text}
+                                    onClick={() => handleSend(text)}
+                                    className="px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-xs font-medium text-foreground hover:bg-primary/20 hover:border-primary/40 transition-all active:scale-95"
+                                >
+                                    {text}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+
                     {isTyping && (
                         <div className="flex justify-start animate-in fade-in slide-in-from-left-2">
                             <div className="bg-[#1A1F26] dark:bg-slate-100 rounded-2xl rounded-tl-none px-4 py-3 flex gap-1 items-center">
@@ -154,7 +186,11 @@ const ChatAssistant = () => {
                             <button
                                 key={chip}
                                 onClick={() => handleSend(chip)}
-                                className="whitespace-nowrap px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-white dark:text-slate-900 dark:bg-slate-100 text-[11px] font-semibold hover:bg-primary/20 transition-all"
+                                className="whitespace-nowrap px-4 py-1.5 rounded-full border border-white/10 
+                       bg-white/5 
+                       text-foreground dark:text-white 
+                       dark:bg-slate-800 
+                       text-[11px] font-semibold hover:bg-primary/20 transition-all"
                             >
                                 {chip}
                             </button>
@@ -171,7 +207,7 @@ const ChatAssistant = () => {
                             className="flex-1 bg-transparent border-none outline-none text-sm px-2 text-foreground placeholder:text-muted-foreground"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                            onKeyDown={(e) => e.key === 'Enter' && input.trim() && handleSend()}
                         />
                         <Button
                             className="rounded-xl w-10 h-10 p-0 shrink-0 bg-[#A3E635] hover:bg-[#94d130] text-black shadow-lg shadow-[#A3E635]/20 active:scale-95 transition-all"
